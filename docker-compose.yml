@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Serviço do Nginx
+  nginx:
+    image: nginx:latest
+    container_name: my_nginx
+    ports:
+      - "8080:80" # Mapeia a porta 80 do container para a porta 8080 no host
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf # Mapeia o arquivo nginx.conf
+      - ./html:/usr/share/nginx/html # Mapeia o diretório html local para o diretório do Nginx
+    depends_on:
+      - php # O Nginx depende do serviço PHP estar em funcionamento
+
+  # Serviço do PHP
+  php:
+    image: php:7.4-fpm
+    container_name: my_php
+    volumes:
+      - ./html:/var/www/html # Mapeia o diretório html local para o diretório do PHP
+    environment:
+      - MYSQL_HOST=db # Variável de ambiente para o host do banco de dados
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=Senha123
+      - MYSQL_DATABASE=meubanco
+    depends_on:
+      - db # O PHP depende do serviço de banco de dados
+
+  # Serviço do MySQL
+  db:
+    image: mysql:8.0
+    container_name: my_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Senha123
+      MYSQL_DATABASE: meubanco # Cria o banco de dados "meubanco" automaticamente
+    volumes:
+      - db_data:/var/lib/mysql # Persiste os dados do banco de dados em um volume
+    ports:
+      - "3306:3306" # Mapeia a porta 3306 para acesso ao MySQL (opcional)
+
+# Volumes para persistência de dados
+volumes:
+  db_data:
