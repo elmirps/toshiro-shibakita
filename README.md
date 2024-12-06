@@ -6,8 +6,6 @@ Muito se tem falado de containers e consequentemente do Docker no ambiente de de
 
 # Docker: Utilização Prática no Cenário de Microsserviços
 
-![Docker](https://upload.wikimedia.org/wikipedia/commons/a/a7/Docker_logo.png)
-
 ## 🚀 Descrição do Projeto
 
 Este projeto demonstra a utilização do **Docker** para criar uma aplicação composta por múltiplos **microsserviços**: um servidor **Nginx**, um backend **PHP** e um banco de dados **MySQL**, orquestrados por **Docker Compose**.
